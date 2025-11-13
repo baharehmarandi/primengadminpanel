@@ -1,0 +1,19 @@
+<header class="w-full flex flex-row justify-between items-center bg-white p-3 rounded-xl shadow">
+    <span class="w-full">پنل مدیریت</span>
+    <div class="flex flex-row items-center gap-2 w-full justify-end cursor-pointer" (click)="menu.toggle($event)">
+      <p-avatar icon="pi pi-user" class="mr-2" shape="circle" />
+      <i class="pi pi-chevron-down"></i>
+    </div>
+</header>
+<div class="flex flex-row mt-5 h-[calc(100svh-110px)]">
+    <aside class="flex flex-col me-5 bg-white w-[250px] rounded-xl shadow p-4">
+      @for(menu of sidebarMenu; track $index){
+        <app-sidebar-menu [menu]="menu"/>
+        <p-divider/>
+      }
+    </aside>
+  <main class="w-full h-full bg-white rounded-xl">
+    <router-outlet/>
+  </main>
+</div>
+<p-menu #menu [model]="items" [popup]="true"/>

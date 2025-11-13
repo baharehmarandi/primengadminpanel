@@ -12,6 +12,7 @@ import {ToastModule} from 'primeng/toast';
 import {MessageService} from 'primeng/api';
 import {Password} from 'primeng/password';
 import {DeviceConfigService} from '../../../../shared/services/device-config.service';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -36,6 +37,7 @@ export class LoginComponent implements OnInit {
   private readonly authService = inject(AuthService);
   private readonly messageService = inject(MessageService);
   protected readonly deviceConfigService = inject(DeviceConfigService);
+  private readonly router = inject(Router);
 
   form!: FormGroup;
   isUser: boolean = false;
@@ -55,12 +57,12 @@ export class LoginComponent implements OnInit {
     this.isUser = this.authService.findUser(this.form.value);
 
     if(this.isUser){
-      this.authService.saveToStorage(this.form.value);
       this.messageService.add({
         severity: 'success',
         summary: 'موفقیت',
         detail: 'شما با موققیت وارد شدید!'
       });
+      this.router.navigate(['/user-management']);
     } else {
       this.messageService.add({
         severity: 'error',

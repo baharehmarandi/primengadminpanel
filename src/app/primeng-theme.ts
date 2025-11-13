@@ -17,6 +17,30 @@ export const MyAura = definePreset(Aura, {
       950: 'oklch(25% 0.14 295)',
     },
   },
+  tokens: {
+    colors: {
+        button: {
+          link: {
+            color: '#000000',       // 👈 رنگ متن اصلی
+            hoverColor: '#1a1a1a',  // 👈 رنگ موقع هاور
+            activeColor: '#000000', // 👈 رنگ موقع کلیک
+          }
+        },
+      neutral: {
+        50:  '#f9fafb',
+        100: '#f3f4f6',
+        200: '#e5e7eb',
+        300: '#d1d5db',
+        400: '#9ca3af',
+        500: '#6b7280',
+        600: '#4b5563',
+        700: '#374151',
+        800: '#1f2937',
+        900: '#111827',
+        950: '#0a0a0a',
+      },
+    },
+  },
     components: {
       focusRing: {
         color: '#8841cf',          // <-- EXACT colour you want
@@ -28,8 +52,16 @@ export const MyAura = definePreset(Aura, {
         focusRing: {
           color: '#8841cf',
         },
-        }
+        },
     },
+  inlineCSS: `
+    .p-button.p-button-link,
+    .p-button.p-button-link:hover,
+    .p-button.p-button-link:focus {
+      text-decoration: none !important;
+      color: #000000 !important;
+    },
+  `,
     colorScheme: {
       light: {
         primary: {

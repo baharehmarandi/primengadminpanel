@@ -1,13 +1,13 @@
 import { Component } from '@angular/core';
-import {LoginComponent} from './features/auth/pages/login/login.component';
 import {Toast} from 'primeng/toast';
+import {MainComponent} from './layout/main/main.component';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   imports: [
-    LoginComponent,
-    Toast
+    Toast,
+    MainComponent
   ],
   styleUrl: './app.component.less'
 })
