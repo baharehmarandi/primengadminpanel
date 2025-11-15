@@ -1,0 +1,54 @@
+<div class="flex w-full h-full justify-center items-center">
+  <div class="flex flex-col-reverse md:flex-row max-w-[800px] bg-white justify-center items-center rounded-xl !py-10">
+    @if(!deviceConfigService.isMobile()){
+      <img src="assets/images/Wavy_Tech-28_Single-10.jpg" alt="sign in" class="h-[350px] max-w-[350px]">
+        <p-divider layout="vertical"/>
+    }
+    <div class="w-full pe-10 pr-6">
+      <div class="flex flex-col items-center gap-10">
+        <div class="flex flex-col items-center gap-2">
+          <span>به پنل مدیریت ادمین خوش آمدید!</span>
+          <span>وارد حساب کاربری خود شوید!</span>
+        </div>
+        <form [formGroup]="form" class="flex flex-col gap-7 justify-center w-full">
+          <div class="flex flex-col">
+            <p-inputgroup>
+              <p-inputgroup-addon>
+                <i class="pi pi-user"></i>
+              </p-inputgroup-addon>
+              <p-floatlabel>
+                <input pInputText id="username" formControlName="username"/>
+                <label for="username" appRequiredMark [control]="form.get('username')!">نام کاربری</label>
+              </p-floatlabel>
+
+            </p-inputgroup>
+            @if(formControl['username'].touched && formControl['username'].invalid){
+              <small class="text-red-600">
+                لطفاً نام کاربری را وارد کنید
+              </small>
+            }
+          </div>
+          <div class="flex flex-col">
+          <p-inputgroup>
+            <p-inputgroup-addon>
+              <i class="pi pi-key"></i>
+            </p-inputgroup-addon>
+            <p-floatlabel>
+              <p-password id="password" formControlName="password" [toggleMask]="true" [feedback]="false"/>
+              <label for="password" appRequiredMark [control]="form.get('password')!">رمز عبور</label>
+            </p-floatlabel>
+          </p-inputgroup>
+            @if(formControl['username'].touched && formControl['username'].invalid){
+              <small class="text-red-600">
+                لطفاً رمز عبور را وارد کنید
+              </small>
+            }
+          </div>
+        </form>
+          <p-button label="ورود" class="!w-full" [fluid]="true" (onClick)="submitForm()"/>
+      </div>
+    </div>
+  </div>
+</div>
+
+

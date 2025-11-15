@@ -1,0 +1,25 @@
+<header class="w-full flex flex-row justify-between items-center bg-white p-3 rounded-xl shadow">
+    <span class="w-full">پنل مدیریت</span>
+    <div class="flex flex-row items-center gap-2 w-full justify-end cursor-pointer" (click)="menu.toggle($event)">
+      <p-avatar icon="pi pi-user" class="mr-2" shape="circle" />
+      <i class="pi pi-chevron-down"></i>
+    </div>
+</header>
+<div class="flex flex-row mt-5 h-[calc(100svh-110px)]">
+    <aside class="flex flex-col me-5 bg-white rounded-xl shadow p-4">
+      <p-iconfield dir="rtl" class="!w-full">
+        <p-inputicon class="pi pi-search" />
+        <input type="text" pInputText placeholder="جست و جو" class="!w-full" (input)="onSearch($event)"/>
+      </p-iconfield>
+      <div class="flex flex-col overflow-y-auto w-[250px]">
+        @for(menu of filteredItems(); track $index){
+          <p-divider/>
+          <app-sidebar-menu [menu]="menu"/>
+        }
+      </div>
+    </aside>
+  <main class="w-full bg-white rounded-xl overflow-auto">
+    <router-outlet/>
+  </main>
+</div>
+<p-menu #menu [model]="items()" [popup]="true"/>

@@ -1,0 +1,11 @@
+<div class="flex items-center w-full cursor-pointer"
+     [ngClass]="{'!bg-primary-50 rounded-[5px] p-2': router.url.includes(menu()!.route)}"
+     (mouseenter)="hover.set(true)"
+     (mouseleave)="hover.set(false)"
+(click)="onClickMenu()">
+  <i class="pi" [ngClass]="[menu()?.iconName, router.url.includes(menu()!.route) ? '!text-primary' : 'text-black']"
+     [style.color]="hover() ? '#8841cf' : '#000000'"></i>
+  <a class="!no-underline ms-2 hover:!no-underline"
+     [ngClass]="{'!text-primary': router.url.includes(menu()!.route)}"
+     [style.color]="hover() ? '#8841cf' : '#000000'">{{menu()?.title}}</a>
+</div>

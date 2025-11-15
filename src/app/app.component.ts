@@ -1,10 +1,14 @@
 import { Component } from '@angular/core';
-import { RouterOutlet } from '@angular/router';
+import {Toast} from 'primeng/toast';
+import {MainComponent} from './layout/main/main.component';
 
 @Component({
   selector: 'app-root',
-  imports: [RouterOutlet],
   templateUrl: './app.component.html',
+  imports: [
+    Toast,
+    MainComponent
+  ],
   styleUrl: './app.component.less'
 })
 export class AppComponent {

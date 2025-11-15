@@ -29,10 +29,13 @@
               {
                 "glob": "**/*",
                 "input": "public"
-              }
+              },
+              "src/assets",
+              "src/styles"
             ],
             "styles": [
-              "src/styles.less"
+              "src/styles.css",
+              "src/styles/font.less"
             ],
             "scripts": []
           },
