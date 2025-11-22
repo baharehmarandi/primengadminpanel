@@ -1,4 +1,4 @@
-import {Component, inject, input, OnDestroy, OnInit, signal} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit, signal} from '@angular/core';
 import {Avatar} from 'primeng/avatar';
 import {Router, RouterOutlet} from '@angular/router';
 import {Divider} from 'primeng/divider';
@@ -31,8 +31,8 @@ import {debounceTime, distinctUntilChanged, Subject, takeUntil} from 'rxjs';
 })
 export class HeaderComponent implements OnInit, OnDestroy {
 
-  private searchSubject = new Subject<string>();
-  private destroy$ = new Subject<void>();
+  private readonly searchSubject = new Subject<string>();
+  private readonly destroy$ = new Subject<void>();
 
   sidebarMenu = signal<SidebarMenu[]>([
     {

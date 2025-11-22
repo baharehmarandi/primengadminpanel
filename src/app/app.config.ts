@@ -4,7 +4,8 @@ import { routes } from './app.routes';
 import {providePrimeNG} from 'primeng/config';
 import {MyAura} from './primeng-theme';
 import {provideAnimations} from '@angular/platform-browser/animations';
-import {MessageService} from 'primeng/api';
+import {ConfirmationService, MessageService} from 'primeng/api';
+import {DialogService} from 'primeng/dynamicdialog';
 
 export const appConfig: ApplicationConfig = {
   providers: [provideZoneChangeDetection({ eventCoalescing: true }), provideRouter(routes),
@@ -17,5 +18,7 @@ export const appConfig: ApplicationConfig = {
       }
     }
   }),provideAnimations(),
-    MessageService]
+    MessageService,
+    DialogService,
+    ConfirmationService,]
 };

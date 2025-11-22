@@ -1,0 +1,109 @@
+<div class="flex flex-col gap-4">
+  <form [formGroup]="form" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-7 mt-7">
+    <div class="flex flex-col">
+      <p-inputgroup>
+        <p-inputgroup-addon>
+          <i class="pi pi-user"></i>
+        </p-inputgroup-addon>
+        <p-floatlabel>
+          <input pInputText id="name" formControlName="name"/>
+          <label for="name" appRequiredMark [control]="form.get('name')!">نام  و نام خانوادگی</label>
+        </p-floatlabel>
+
+      </p-inputgroup>
+      @if(formControl['name'].touched && formControl['name'].invalid){
+        <small class="text-red-600">
+          لطفاً نام و نام خانوادگی را وارد کنید!
+        </small>
+      }
+    </div>
+    <div class="flex flex-col">
+      <p-inputgroup>
+        <p-inputgroup-addon>
+          <i class="pi pi-user"></i>
+        </p-inputgroup-addon>
+        <p-floatlabel>
+          <input pInputText id="username" formControlName="username"/>
+          <label for="username" appRequiredMark [control]="form.get('username')!">نام  کاربری</label>
+        </p-floatlabel>
+
+      </p-inputgroup>
+      @if(formControl['username'].touched && formControl['username'].invalid){
+        <small class="text-red-600">
+          لطفاً نام کاربری را وارد کنید!
+        </small>
+      }
+    </div>
+    <div class="flex flex-col">
+      <p-inputgroup>
+        <p-inputgroup-addon>
+          <i class="pi pi-credit-card"></i>
+        </p-inputgroup-addon>
+        <p-floatlabel>
+          <p-select [options]="roleOptions" inputId="role" formControlName="role" optionValue="label" optionLabel="label"/>
+          <label for="role" appRequiredMark [control]="form.get('role')!">نقش</label>
+        </p-floatlabel>
+
+      </p-inputgroup>
+      @if(formControl['role'].touched && formControl['role'].invalid){
+        <small class="text-red-600">
+          لطفاً نقش کاربر را انتخاب کنید!
+        </small>
+      }
+    </div>
+    <div class="flex flex-col">
+      <p-inputgroup>
+        <p-inputgroup-addon>
+          <i class="pi pi-phone"></i>
+        </p-inputgroup-addon>
+        <p-floatlabel>
+          <input pInputText id="phoneNumber" formControlName="phoneNumber"/>
+          <label for="phoneNumber" appRequiredMark [control]="form.get('phoneNumber')!">شماره موبایل</label>
+        </p-floatlabel>
+
+      </p-inputgroup>
+      @if(formControl['phoneNumber'].touched && formControl['phoneNumber'].invalid){
+        <small class="text-red-600">
+          لطفاً شماره موبایل را وارد کنید!
+        </small>
+      }
+    </div>
+    <div class="flex flex-col">
+      <p-inputgroup>
+        <p-inputgroup-addon>
+          <i class="pi pi-envelope"></i>
+        </p-inputgroup-addon>
+        <p-floatlabel>
+          <input pInputText id="email" formControlName="email"/>
+          <label for="email" appRequiredMark [control]="form.get('email')!">ایمیل</label>
+        </p-floatlabel>
+
+      </p-inputgroup>
+    </div>
+    <div class="flex flex-col">
+      <p-inputgroup>
+        <p-inputgroup-addon>
+          <i class="pi pi-key"></i>
+        </p-inputgroup-addon>
+        <p-floatlabel>
+          <input pInputText id="password" formControlName="password"/>
+          <label for="password" appRequiredMark [control]="form.get('password')!">پسورد</label>
+        </p-floatlabel>
+      </p-inputgroup>
+    </div>
+    <div class="flex flex-row gap-2">
+      <div class="flex items-center gap-1">
+        <p-radiobutton name="status" formControlName="status" [value]="true" inputId="active" />
+        <label for="active" class="ml-2">فعال</label>
+      </div>
+
+      <div class="flex items-center gap-1">
+        <p-radiobutton name="status" formControlName="status" [value]="false" inputId="deactive" />
+        <label for="deactive" class="ml-2">غیرفعال</label>
+      </div>
+    </div>
+  </form>
+    <div class="flex justify-end !w-full">
+      <p-button [label]="dialogConfig.data?.mode === 'new' ? 'افزودن کاربر' : 'ویرایش کاربر'" class="!w-50" [fluid]="true" (onClick)="submitForm()"/>
+    </div>
+</div>

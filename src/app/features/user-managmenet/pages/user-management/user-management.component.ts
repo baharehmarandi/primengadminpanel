@@ -1,11 +1,17 @@
-import {Component, inject, OnInit, signal} from '@angular/core';
+import {Component, inject, OnDestroy, OnInit} from '@angular/core';
 import {Divider} from 'primeng/divider';
 import {IconField} from 'primeng/iconfield';
 import {InputIcon} from 'primeng/inputicon';
 import {InputText} from 'primeng/inputtext';
 import {Button} from 'primeng/button';
 import {TableModule} from 'primeng/table';
-import {AuthService} from '../../../auth/service/auth.service';
+import {Tag} from 'primeng/tag';
+import {debounceTime, distinctUntilChanged, Subject, takeUntil} from 'rxjs';
+import {User} from '../../../auth/models/user';
+import {DialogService, DynamicDialogRef} from 'primeng/dynamicdialog';
+import {ConfirmationService} from 'primeng/api';
+import {UserService} from '../../../../shared/services/user.service';
+import {UserUpsertComponent} from '../../components/user-upsert/user-upsert.component';
 
 @Component({
   selector: 'app-user-management',
@@ -15,21 +21,105 @@ import {AuthService} from '../../../auth/service/auth.service';
     InputIcon,
     InputText,
     Button,
-    TableModule
+    TableModule,
+    Tag
   ],
   templateUrl: './user-management.component.html',
   styleUrl: './user-management.component.less'
 })
-export class UserManagementComponent {
+export class UserManagementComponent implements OnInit, OnDestroy {
 
-  private readonly authService = inject(AuthService);
-  users = this.authService.getAllUsers();
+  private readonly userService = inject(UserService);
+  private readonly confirmationService = inject(ConfirmationService);
+  private readonly dialogService = inject(DialogService);
 
-  onSearch(event: any) {
-    console.log('search user');
+  private readonly searchSubject = new Subject<string>();
+  private readonly destroy$ = new Subject<void>();
+
+  users = this.userService.users;
+  ref?: DynamicDialogRef | null;
+
+  ngOnInit(): void {
+    this.userService.getUsers();
+
+    this.searchSubject.pipe(
+      debounceTime(500),
+      distinctUntilChanged(),
+      takeUntil(this.destroy$)
+    ).subscribe((searchTerm) => {
+     this.userService.getUsers(searchTerm);
+    });
+  }
+
+  onSearch(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.searchSubject.next(value);
   }
 
   onAddUser(){
-  console.log('add user');
+    this.ref = this.dialogService.open(UserUpsertComponent, {
+      header: 'کاربر جدید',
+      data: {
+        mode: 'new',
+      },
+      width: '60vw',
+      modal: true,
+      closable: true,
+      contentStyle: { overflow: 'auto' },
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw'
+      },
+
+    });
+  }
+
+  onEditUser(user: User) {
+    this.ref = this.dialogService.open(UserUpsertComponent, {
+      header: 'ویرایش کاربران',
+      data: {
+        user,
+        mode: 'edit',
+      },
+      width: '60vw',
+      modal: true,
+      closable: true,
+      contentStyle: { overflow: 'auto' },
+      breakpoints: {
+        '960px': '75vw',
+        '640px': '90vw'
+      },
+
+    });
+  }
+
+  onDeleteUser(event: Event, user: User) {
+    this.confirmationService.confirm({
+      target: event.target as EventTarget,
+      message: `آیا از حذف کاربر "<b>${user.name}</b>" اطمبنان دارید؟`,
+      header: 'حذف کاربر',
+      icon: 'pi pi-info-circle',
+      rejectButtonProps: {
+        label: 'انصراف',
+        severity: 'secondary',
+        outlined: true,
+      },
+      acceptButtonProps: {
+        label: 'حذف',
+        severity: 'danger',
+      },
+
+      accept: () => {
+        this.userService.deleteUser(user.id);
+      },
+    });
+
+
+  }
+
+  ngOnDestroy() {
+    if (this.ref) {
+      this.ref.close();
+    }
   }
 }
