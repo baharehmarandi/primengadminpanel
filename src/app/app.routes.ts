@@ -14,6 +14,10 @@ export const routes: Routes = [
     loadChildren: () => import('./features/user-managmenet/user.routes'),
   },
   {
+    path: 'category-management',
+    loadChildren: () => import('./features/category-management/category.routes'),
+  },
+  {
     path: '',
     pathMatch: 'full',
     canActivate: [authGuard],
