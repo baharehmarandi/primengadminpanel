@@ -26,18 +26,21 @@
           <th>اقدامات</th>
         </tr>
       </ng-template>
-      <ng-template #body let-user>
+      <ng-template #body let-user let-rowIndex="rowIndex">
         <tr>
-          <td>{{ user.id }}</td>
+          <td>{{ rowIndex + 1 }}</td>
           <td>{{ user.name }}</td>
           <td>{{ user.username }}</td>
           <td>{{ user.role }}</td>
           <td>{{ user.phoneNumber }}</td>
           <td>{{ user.email }}</td>
-          <td>{{ user.status }}</td>
           <td>
-            <i class="pi pi-user-edit !text-yellow"></i>
-            <i class="pi pi-user-minus !text-red"></i>
+            <p-tag [value]="user.status ? 'فعال' : 'غیرفعال'" [severity]="user.status ? 'success' : 'danger'" />
+          </td>
+          <td class="flex flex-row items-center justify-around">
+            <p-button icon="pi pi-user-edit" [rounded]="true" [text]="true" severity="success" size="small" (click)="onEditUser(user)"/>
+            <p-divider layout="vertical"/>
+            <p-button icon="pi pi-user-minus" [rounded]="true" [text]="true" severity="danger" size="small" (click)="onDeleteUser($event, user)"/>
           </td>
         </tr>
       </ng-template>
